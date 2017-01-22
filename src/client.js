@@ -46,6 +46,40 @@ class Request {
         });
     }
 
+     put(data) {
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.onload = resolve;
+            xhr.onerror = reject;
+
+            xhr.open("PUT", this.requestUrl);
+            this._setXhrHeaders(xhr);
+
+            let form = new FormData();
+            Object.keys(data)
+                .forEach(key => form.append(key, data[key]))
+            xhr.send(form);
+        });
+    }
+
+    delete(data){
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.onload = resolve;
+            xhr.onerror = reject;
+
+            let query = Object.keys(data)
+                .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+                .join("&");
+
+            xhr.open("DELETE", this.requestUrl + "?" + query);
+            this._setXhrHeaders( xhr );
+
+            xhr.send();
+        });
+    }
+
+
     _setXhrHeaders(xhr) {
         if (this.requestHeaders) {
             Object.keys(this.requestHeaders).forEach(key => xhr.setRequestHeader(key, this.requestHeaders[key]));
