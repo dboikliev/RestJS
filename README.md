@@ -4,7 +4,7 @@ A simple rest client implemented in JavaScript.
 
 ##Examples
 
-####1. Simple request
+####1. Simple request:
 
 ```javascript
 rest("http://localhost")
@@ -13,7 +13,7 @@ rest("http://localhost")
 ```
 
 
-####2. Request with parameters
+####2. Request with parameters:
 
 ```javascript
 rest("http://localhost")
@@ -28,7 +28,7 @@ GET request sent to:
 http://localhost/?param=value
 ```
 
-####3. Sending additional headers with the request
+####3. Sending additional headers with the request:
 
 ```javascript
 rest("http://localhost")
