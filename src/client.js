@@ -79,7 +79,6 @@ class Request {
         });
     }
 
-
     _setXhrHeaders(xhr) {
         if (this.requestHeaders) {
             Object.keys(this.requestHeaders).forEach(key => xhr.setRequestHeader(key, this.requestHeaders[key]));
