@@ -1,7 +1,3 @@
-function rest(url) {
-    return new Request(url);
-}
-
 class Request { 
     constructor (requestUrl) {
         this.requestUrl = requestUrl;
@@ -17,18 +13,19 @@ class Request {
         return this;
     }
 
-    get(data) {
+    get(data){
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.onload = resolve;
             xhr.onerror = reject;
 
             let query = Object.keys(data)
-                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-                .join('&');
-            xhr.open('GET', this.requestUrl + "?" + query);
-            this._setXhrHeaders(xhr);
-            
+                .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+                .join("&");
+
+            xhr.open("GET", this.requestUrl + "?" + query);
+            this._setXhrHeaders( xhr );
+
             xhr.send();
         });
     }
@@ -39,7 +36,7 @@ class Request {
             xhr.onload = resolve;
             xhr.onerror = reject;
 
-            xhr.open('POST', this.requestUrl);
+            xhr.open("POST", this.requestUrl);
             this._setXhrHeaders(xhr);
 
             let form = new FormData();
@@ -54,4 +51,8 @@ class Request {
             Object.keys(this.requestHeaders).forEach(key => xhr.setRequestHeader(key, this.requestHeaders[key]));
         }
     }
+}
+
+function rest(url) {
+    return new Request(url);
 }

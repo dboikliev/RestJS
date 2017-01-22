@@ -12,7 +12,6 @@ rest("http://localhost")
   .then(success => console.log(success), error => console.log(error));
 ```
 
-
 ####2. Request with parameters:
 
 ```javascript
