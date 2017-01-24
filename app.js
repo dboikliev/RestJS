@@ -4,6 +4,9 @@ requirejs.config({
 
 require(["client"], () => {
     rest("http://localhost")
-        .get({ bla: 5 })
+        .headers({ "my-custom-header": "bla" })
+        .query({ bla: 5 })
+        .body({ sada: 123 })
+        .get()
         .then(console.log, console.log);
 });
