@@ -11,7 +11,7 @@ class Request {
                 return this;
             }
             else {
-                return this.route[routeName];
+                return this.routes[routeName];
             }
         }
     }
