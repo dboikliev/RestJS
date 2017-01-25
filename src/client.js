@@ -5,10 +5,6 @@ class Request {
     }
 
     route(routeName, relativeUrl) {
-        if (this[routeName]) {
-            throw new Error(routeName + " is reserved and cannot be used a the name of a route.");
-        }
-
         if (routeName) {
             if (relativeUrl) {
                 this.routes[routeName] = new Request(this.requestUrl + relativeUrl);

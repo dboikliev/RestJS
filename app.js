@@ -10,7 +10,7 @@ require(["client"], () => {
     client.routes.test
         .parameters({ userId: 10, officeId: 20 })
         .query({ bla: 10 })
-        .post();
+        .get();
 
     client.routes.bla
         .parameters({ txt: "some txt" })
