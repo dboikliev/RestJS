@@ -1,5 +1,9 @@
 {
     "preset": "jquery",
     "requireSpacesInsideParentheses": null,
-    "requireSpacesInsideBrackets": false
+    "requireSpacesInsideBrackets": false,
+    "disallowKeywordsOnNewLine": null,
+    "requireKeywordsOnNewLine": [
+        "else"
+    ]
 } 

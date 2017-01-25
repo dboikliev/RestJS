@@ -3,10 +3,16 @@ requirejs.config({
 });
 
 require(["client"], () => {
-    rest("http://localhost")
-        .headers({ "my-custom-header": "bla" })
-        .query({ bla: 5 })
-        .body({ sada: 123 })
-        .get()
-        .then(console.log, console.log);
+    var client = rest("http://localhost/api")
+        .route("test", "/users/{userId}/offices/{officeId}")
+        .route("bla", "/bla/{txt}");
+
+    client.routes.test
+        .parameters({ userId: 10, officeId: 20 })
+        .query({ bla: 10 })
+        .post();
+
+    client.routes.bla
+        .parameters({ txt: "some txt" })
+        .get();
 });

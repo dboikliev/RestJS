@@ -1,6 +1,28 @@
-class Request { 
+class Request {
     constructor (requestUrl) {
         this.requestUrl = requestUrl;
+        this.routes = {};
+    }
+
+    route(routeName, relativeUrl) {
+        if (this[routeName]) {
+            throw new Error(routeName + " is reserved and cannot be used a the name of a route.");
+        }
+
+        if (routeName) {
+            if (relativeUrl) {
+                this.routes[routeName] = new Request(this.requestUrl + relativeUrl);
+                return this;
+            }
+            else {
+                return this.route[routeName];
+            }
+        }
+    }
+
+    parameters(requestParameters) {
+        this.requestParameters = requestParameters;
+        return this;
     }
 
     headers(requestHeaders) {
@@ -18,69 +40,55 @@ class Request {
         return this;
     }
 
-    get(){
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.onload = resolve;
-            xhr.onerror = reject;
-
-            let query = Object.keys(this.requestQuery)
-                .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(this.requestQuery[key]))
-                .join("&");
-
-            xhr.open("GET", this.requestUrl + "?" + query);
-            this._setXhrHeaders( xhr );
-
-            xhr.send();
-        });
+    get() {
+        return this._buildRequest("GET");
     }
 
     post() {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.onload = resolve;
-            xhr.onerror = reject;
-
-            xhr.open("POST", this.requestUrl);
-            this._setXhrHeaders(xhr);
-
-            let form = new FormData();
-            Object.keys(this.requestBody)
-                .forEach(key => form.append(key, this.requestBody[key]))
-            xhr.send(form);
-        });
+        return this._buildRequest("POST");
     }
 
     put() {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.onload = resolve;
-            xhr.onerror = reject;
-
-            xhr.open("PUT", this.requestUrl);
-            this._setXhrHeaders(xhr);
-
-            let form = new FormData();
-            Object.keys(this.requestBody)
-                .forEach(key => form.append(key, this.requestBody[key]))
-            xhr.send(form);
-        });
+        return this._buildRequest("PUT");
     }
 
-    delete(){
+    delete() {
+        return this._buildRequest("DELETE");
+    }
+
+    _buildRequest(method) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.onload = resolve;
             xhr.onerror = reject;
 
-            let query = Object.keys(this.requestQuery)
-                .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(this.requestBody[key]))
-                .join("&");
+            let url = this.requestUrl;
+            if (this.requestParameters) {
+                url = this.requestUrl.replace(/{(\w+)}/g, (match, submatch) => this.requestParameters[submatch]);
+            }
 
-            xhr.open("DELETE", this.requestUrl + "?" + query);
-            this._setXhrHeaders( xhr );
+            if (this.requestQuery) {
+                let query = Object.keys(this.requestQuery)
+                    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(this.requestQuery[key]))
+                    .join("&");
 
-            xhr.send();
+                xhr.open(method, url + "?" + query);
+            }
+            else {
+                xhr.open(method, url);
+            }
+
+            this._setXhrHeaders(xhr);
+
+            if (this.requestBody) {
+                let form = new FormData();
+                Object.keys(this.requestBody)
+                    .forEach(key => form.append(key, this.requestBody[key]))
+                xhr.send(form);
+            }
+            else {
+                xhr.send();
+            }
         });
     }
 
