@@ -16,7 +16,8 @@ rest("http://localhost")
 
 ```javascript
 rest("http://localhost")
-  .get({ param: "value" })
+  .query({ param: "value" })
+  .get()
   .then(success => console.log(success), error => console.log(error));
 ```
 
