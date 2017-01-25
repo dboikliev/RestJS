@@ -23,9 +23,8 @@ rest("http://localhost")
 
 ####Result:
 
-GET request sent to:
 ```
-http://localhost/?param=value
+GET "http://localhost/?param=value"
 ```
 
 ####3. Sending additional headers with the request:
@@ -36,4 +35,28 @@ rest("http://localhost")
   .query({ param: "value" })
   .get()
   .then(success => console.log(success), error => console.log(error));
+```
+
+####4. Named routes:
+
+```javascript
+let client = rest("http://localhost/api")
+    .route("test", "/users/{userId}/offices/{officeId}")
+    .route("bla", "/bla/{txt}");
+
+client.routes.test
+    .parameters({ userId: 10, officeId: 20 })
+    .query({ bla: 10 })
+    .post();
+
+client.routes.bla
+    .parameters({ txt: "some txt" })
+    .get();
+```
+
+####Result:
+
+```
+GET "http://localhost/api/users/10/offices/20?bla=10"
+GET "http://localhost/api/bla/some%20txt"
 ```
