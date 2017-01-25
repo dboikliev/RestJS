@@ -32,6 +32,7 @@ http://localhost/?param=value
 ```javascript
 rest("http://localhost")
   .headers({ "my-special-snowflake-header": "very important stuff" })
-  .get({ param: "value" })
+  .query({ param: "value" })
+  .get()
   .then(success => console.log(success), error => console.log(error));
 ```
