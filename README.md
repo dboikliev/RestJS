@@ -57,6 +57,6 @@ client.routes.bla
 ####Result:
 
 ```
-GET "http://localhost/api/users/10/offices/20?bla=10"
+POST "http://localhost/api/users/10/offices/20?bla=10"
 GET "http://localhost/api/bla/some%20txt"
 ```
