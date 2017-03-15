@@ -2,9 +2,9 @@
 
 A simple rest client implemented in JavaScript.
 
-##Examples
+## Examples
 
-####1. Simple request:
+#### 1. Simple request:
 
 ```javascript
 rest("http://localhost")
@@ -12,7 +12,7 @@ rest("http://localhost")
   .then(success => console.log(success), error => console.log(error));
 ```
 
-####2. Request with parameters:
+#### 2. Request with parameters:
 
 ```javascript
 rest("http://localhost")
@@ -21,13 +21,13 @@ rest("http://localhost")
   .then(success => console.log(success), error => console.log(error));
 ```
 
-####Result:
+#### Result:
 
 ```
 GET "http://localhost/?param=value"
 ```
 
-####3. Sending additional headers with the request:
+#### 3. Sending additional headers with the request:
 
 ```javascript
 rest("http://localhost")
@@ -37,7 +37,7 @@ rest("http://localhost")
   .then(success => console.log(success), error => console.log(error));
 ```
 
-####4. Named routes:
+#### 4. Named routes:
 
 ```javascript
 let client = rest("http://localhost/api")
@@ -54,7 +54,7 @@ client.routes.bla
     .get();
 ```
 
-####Result:
+#### Result:
 
 ```
 POST "http://localhost/api/users/10/offices/20?bla=10"
