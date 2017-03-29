@@ -98,3 +98,35 @@ class Request {
 function rest(url) {
     return new Request(url);
 }
+
+let api = (apiRoot, definitions) => {
+    let root = rest(apiRoot);
+
+    let generatedApi = {};
+
+    for (let key in definitions) {
+        let definition = definitions[key];
+        let method = definition.method;
+        let url = definition.url; 
+        root.route(key, url);
+        
+        generatedApi[key] = function (obj) {
+            let request = root.routes[key];
+            if (obj.parameters) {
+                request = request.parameters(obj.parameters);
+            }
+
+            if (obj.query) {
+                request = request.query(obj.query);
+            }
+
+            if (obj.body) {
+                request = request.body(obj.body);
+            }
+
+            request[method]();
+        }
+    }       
+
+    return generatedApi;
+}
