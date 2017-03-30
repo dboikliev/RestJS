@@ -64,17 +64,24 @@ GET "http://localhost/api/bla/some%20txt"
 #### 4. Defining and using an api:
 
 ```javascript
-    var usersApi = api("http://localhost/api", {
-        getUser: {
-            method: "get",
-            url: "/users/{userId}"
-        },
-        createUser: {
-            method: "post",
-            url: "/users"
-        }
-    });
+var usersApi = api("http://localhost/api", {
+    getUser: {
+        method: "get",
+        url: "/users/{userId}"
+    },
+    createUser: {
+        method: "post",
+        url: "/users"
+    }
+});
 
-    usersApi.getUser({ parameters: { userId: 10 }, query: { test: 1, bla: "10" } })
-    usersApi.createUser({ body: { name: "Ivan", age: 21 } });
+usersApi.getUser({ parameters: { userId: 10 }, query: { test: 1, bla: "10" } })
+usersApi.createUser({ body: { name: "Ivan", age: 21 } });
+```
+
+#### Result:
+
+```
+GET "http://localhost/api/users/10?test=1&bla=10"
+POST "http://localhost/api/users"
 ```
