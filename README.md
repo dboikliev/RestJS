@@ -60,3 +60,21 @@ client.routes.bla
 POST "http://localhost/api/users/10/offices/20?bla=10"
 GET "http://localhost/api/bla/some%20txt"
 ```
+
+#### 4. Defining and using an api:
+
+```javascript
+    var usersApi = api("http://localhost/api", {
+        getUser: {
+            method: "get",
+            url: "/users/{userId}"
+        },
+        createUser: {
+            method: "post",
+            url: "/users"
+        }
+    });
+
+    usersApi.getUser({ parameters: { userId: 10 }, query: { test: 1, bla: "10" } })
+    usersApi.createUser({ body: { name: "Ivan", age: 21 } });
+```
